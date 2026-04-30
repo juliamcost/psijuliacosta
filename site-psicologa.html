@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Julia Costa · Psicóloga Clínica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:    #F4A7B9;
+      --rose-light: #FDE8EF;
+      --wine:    #7B2D42;
+      --wine-dark: #4E1A28;
+      --blush:   #FAD4DF;
+      --cream:   #FFF8FA;
+      --white:   #FFFFFF;
+      --text:    #3A1520;
+      --muted:   #9E6070;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 6%;
+      background: rgba(255,248,250,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(244,167,185,0.25);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--wine);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--wine); }
+    .nav-cta {
+      background: var(--wine);
+      color: var(--white) !important;
+      padding: .55rem 1.4rem;
+      border-radius: 50px;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--wine-dark) !important; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 6% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 70% at 90% 10%, rgba(244,167,185,0.35) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 10% 90%, rgba(123,45,66,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--blush);
+      color: var(--wine);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: .4rem 1.1rem;
+      border-radius: 50px;
+      margin-bottom: 1.6rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      line-height: 1.12;
+      color: var(--wine-dark);
+      margin-bottom: 1.4rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--wine);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 2.4rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--wine);
+      color: var(--white);
+      text-decoration: none;
+      padding: .9rem 2.2rem;
+      border-radius: 50px;
+      font-size: .95rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(123,45,66,0.25);
+    }
+    .btn-primary:hover {
+      background: var(--wine-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(123,45,66,0.32);
+    }
+    .btn-secondary {
+      display: inline-block;
+      border: 2px solid var(--rose);
+      color: var(--wine);
+      text-decoration: none;
+      padding: .85rem 2rem;
+      border-radius: 50px;
+      font-size: .95rem;
+      font-weight: 500;
+      margin-left: 1rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-secondary:hover { background: var(--blush); transform: translateY(-2px); }
+
+    .hero-image {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .hero-blob {
+      width: min(420px, 90%);
+      aspect-ratio: 1;
+      border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+      background: linear-gradient(135deg, var(--blush) 0%, var(--rose) 50%, var(--wine) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+      animation: morph 8s ease-in-out infinite;
+      box-shadow: 0 20px 60px rgba(123,45,66,0.2);
+    }
+    @keyframes morph {
+      0%,100% { border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; }
+      33%      { border-radius: 40% 60% 45% 55% / 55% 45% 60% 40%; }
+      66%      { border-radius: 50% 50% 60% 40% / 40% 60% 50% 50%; }
+    }
+    .hero-badge {
+      position: absolute; bottom: 10%; right: 5%;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      box-shadow: 0 8px 32px rgba(123,45,66,0.15);
+      text-align: center;
+    }
+    .hero-badge strong { display: block; font-size: 1.5rem; color: var(--wine); font-family: 'Playfair Display', serif; }
+    .hero-badge span { font-size: .78rem; color: var(--muted); }
+
+    /* ── SECTIONS SHARED ── */
+    section { padding: 6rem 6%; }
+    .section-tag {
+      display: inline-block;
+      background: var(--blush);
+      color: var(--wine);
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.2;
+      color: var(--wine-dark);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* ── SOBRE ── */
+    #sobre {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .sobre-visual {
+      position: relative;
+    }
+    .sobre-card {
+      background: linear-gradient(135deg, var(--rose-light) 0%, var(--blush) 100%);
+      border-radius: 32px;
+      padding: 3rem;
+      text-align: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .sobre-card::after {
+      content: '❝';
+      position: absolute; bottom: -1rem; right: 1rem;
+      font-size: 8rem;
+      color: rgba(244,167,185,0.35);
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+    }
+    .sobre-pill {
+      position: absolute; top: -1rem; right: -1rem;
+      background: var(--wine);
+      color: var(--white);
+      border-radius: 50px;
+      padding: .6rem 1.2rem;
+      font-size: .8rem;
+      font-weight: 500;
+    }
+    .sobre-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #5a3040;
+      margin-bottom: 1.2rem;
+    }
+    .sobre-chips { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.4rem; }
+    .chip {
+      background: var(--blush);
+      color: var(--wine);
+      font-size: .8rem;
+      padding: .4rem .9rem;
+      border-radius: 50px;
+      font-weight: 500;
+    }
+
+    /* ── SERVIÇOS ── */
+    #servicos { background: var(--cream); }
+    .servicos-header { text-align: center; margin-bottom: 3.5rem; }
+    .servicos-header .section-sub { margin: 0 auto; }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2.2rem;
+      border: 1.5px solid rgba(244,167,185,0.3);
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--rose), var(--wine));
+      border-radius: 4px 4px 0 0;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(123,45,66,0.12); border-color: var(--rose); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon { font-size: 2.4rem; margin-bottom: 1.2rem; }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--wine-dark);
+      margin-bottom: .6rem;
+    }
+    .service-card p { font-size: .9rem; line-height: 1.7; color: var(--muted); }
+
+    /* ── COMO FUNCIONA ── */
+    #como-funciona { background: var(--wine-dark); }
+    #como-funciona .section-tag { background: rgba(244,167,185,0.2); color: var(--rose); }
+    #como-funciona .section-title { color: var(--white); }
+    #como-funciona .section-sub { color: rgba(255,255,255,0.65); }
+    .steps-header { margin-bottom: 3.5rem; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .step {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(244,167,185,0.2);
+      border-radius: 20px;
+      padding: 2rem 1.6rem;
+      position: relative;
+      transition: background .25s;
+    }
+    .step:hover { background: rgba(255,255,255,0.12); }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: rgba(244,167,185,0.25);
+      line-height: 1;
+      margin-bottom: .8rem;
+    }
+    .step h3 { color: var(--rose); font-size: 1.05rem; margin-bottom: .6rem; }
+    .step p { font-size: .88rem; color: rgba(255,255,255,0.6); line-height: 1.65; }
+
+    /* ── CONTATO ── */
+    #contato { background: var(--white); text-align: center; }
+    .contato-inner {
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .contato-inner .section-title { margin-bottom: .8rem; }
+    .contato-inner .section-sub { margin: 0 auto 2.5rem; text-align: center; }
+    .contato-card {
+      background: linear-gradient(135deg, var(--rose-light), var(--blush));
+      border-radius: 28px;
+      padding: 3rem;
+      margin-top: 2rem;
+    }
+    .contato-emoji { font-size: 3rem; margin-bottom: 1rem; }
+    .contato-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--wine-dark);
+      margin-bottom: .8rem;
+    }
+    .contato-card p { color: var(--muted); margin-bottom: 1.8rem; font-size: .95rem; line-height: 1.7; }
+    .btn-whatsapp {
+      display: inline-flex; align-items: center; gap: .7rem;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 2.4rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,0.45); }
+    .contato-info {
+      display: flex; justify-content: center; gap: 2.5rem;
+      margin-top: 2.5rem; flex-wrap: wrap;
+    }
+    .info-item { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
+    .info-item span:first-child { font-size: 1.4rem; }
+    .info-item strong { color: var(--wine); font-size: .85rem; }
+    .info-item em { color: var(--muted); font-size: .8rem; font-style: normal; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--wine-dark);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 6%;
+      font-size: .82rem;
+    }
+    footer strong { color: var(--rose); }
+
+    /* ── FLOAT WHATSAPP ── */
+    .float-wa {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      background: #25D366;
+      color: #fff;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.7rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      text-decoration: none;
+      transition: transform .2s;
+    }
+    .float-wa:hover { transform: scale(1.1); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; text-align: center; padding-top: 8rem; }
+      .hero-sub { margin: 0 auto 2rem; }
+      .hero-image { margin-top: 2.5rem; }
+      #sobre { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Psicóloga Julia Costa</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#contato" class="nav-cta">Agendar consulta</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text fade-in">
+    <span class="hero-eyebrow">✦ Psicóloga Clínica · CRP 13/13585</span>
+    <h1 class="hero-title">
+      Cuidar de você<br/>
+      é um ato de <em>amor próprio</em>
+    </h1>
+    <p class="hero-sub">
+      Um espaço seguro, acolhedor e sem julgamentos para você se reconectar consigo mesma e florescer em todas as áreas da vida.
+    </p>
+    <a href="#contato" class="btn-primary">Agendar minha primeira sessão</a>
+    <a href="#sobre" class="btn-secondary">Saiba mais</a>
+  </div>
+  <div class="hero-image fade-in" style="transition-delay:.2s">
+    <div class="hero-blob">🌸</div>
+    <div class="hero-badge">
+      <strong>+200</strong>
+      <span>pacientes atendidas</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sobre-visual fade-in">
+    <div class="sobre-card">
+      🌺
+      <span class="sobre-pill">✦ Psicóloga CRP 13/13585</span>
+    </div>
+  </div>
+  <div class="sobre-text fade-in" style="transition-delay:.15s">
+    <span class="section-tag">Sobre mim</span>
+    <h2 class="section-title">Olá! Eu sou<br/>Julia Costa 💕</h2>
+    <p>
+      Sou psicóloga clínica especializada em Terapia Cognitivo-Comportamental (TCC), apaixonada por ajudar pessoas a se reconectarem com sua própria essência. Acredito que cada uma tem dentro de si a força necessária para superar seus desafios — meu papel é caminhar ao seu lado nessa jornada.
+    </p>
+    <p>
+      Trabalho de forma humanizada, empática e baseada em evidências, criando um espaço seguro onde você pode ser completamente você mesma. Atendo online, para que você tenha acesso ao cuidado que merece de onde estiver.
+    </p>
+    <div class="sobre-chips">
+      <span class="chip">🎓 Psicologia Clínica</span>
+      <span class="chip">🧠 TCC</span>
+      <span class="chip">💻 Atendimento Online</span>
+      <span class="chip">🌿 Ansiedade & Estresse</span>
+      <span class="chip">💕 Autoconhecimento</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="servicos-header fade-in">
+    <span class="section-tag">O que ofereço</span>
+    <h2 class="section-title">Serviços & Abordagens</h2>
+    <p class="section-sub">Utilizo a Terapia Cognitivo-Comportamental (TCC), uma abordagem baseada em evidências que conecta pensamentos, emoções e comportamentos para promover mudanças reais na sua vida.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="service-card fade-in">
+      <div class="service-icon">🧠</div>
+      <h3>Terapia Cognitivo-Comportamental</h3>
+      <p>Abordagem baseada em evidências que identifica padrões de pensamento e comportamento para gerar mudanças reais e duradouras.</p>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:.1s">
+      <div class="service-icon">💻</div>
+      <h3>Atendimento 100% Online</h3>
+      <p>Sessões por videochamada com toda a qualidade e acolhimento da terapia presencial, de onde você estiver no Brasil.</p>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:.2s">
+      <div class="service-icon">🌸</div>
+      <h3>Ansiedade & Estresse</h3>
+      <p>Ferramentas práticas da TCC para gerenciar a ansiedade, reduzir o estresse e recuperar o equilíbrio emocional.</p>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:.3s">
+      <div class="service-icon">💕</div>
+      <h3>Autoconhecimento & Bem-estar</h3>
+      <p>Desenvolva uma relação mais saudável consigo mesma, com suas emoções e com as pessoas ao seu redor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="steps-header fade-in">
+    <span class="section-tag">Processo</span>
+    <h2 class="section-title">Como funciona a terapia?</h2>
+    <p class="section-sub">O processo terapêutico é gradual, respeitando o seu ritmo e suas necessidades.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step fade-in">
+      <div class="step-num">01</div>
+      <h3>Primeiro contato</h3>
+      <p>Você me envia uma mensagem e agendamos uma conversa inicial para nos conhecermos.</p>
+    </div>
+    <div class="step fade-in" style="transition-delay:.1s">
+      <div class="step-num">02</div>
+      <h3>Sessão de avaliação</h3>
+      <p>Conversamos sobre o que te trouxe até aqui e traçamos juntas os objetivos do processo terapêutico.</p>
+    </div>
+    <div class="step fade-in" style="transition-delay:.2s">
+      <div class="step-num">03</div>
+      <h3>Sessões regulares</h3>
+      <p>Encontros semanais de 50 minutos por videochamada, onde trabalhamos juntas no seu desenvolvimento com as ferramentas da TCC.</p>
+    </div>
+    <div class="step fade-in" style="transition-delay:.3s">
+      <div class="step-num">04</div>
+      <h3>Transformação</h3>
+      <p>Com dedicação e presença, você começa a perceber mudanças reais na sua vida e no seu bem-estar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="contato-inner fade-in">
+    <span class="section-tag">Vamos conversar?</span>
+    <h2 class="section-title">Dê o primeiro passo 💌</h2>
+    <p class="section-sub">Você não precisa enfrentar isso sozinha. Estou aqui para te apoiar nessa jornada de autoconhecimento e cura.</p>
+    <div class="contato-card">
+      <div class="contato-emoji">🌸</div>
+      <h3>Agende sua consulta</h3>
+      <p>Entre em contato pelo WhatsApp para agendar sua sessão ou tirar dúvidas. Responderei com carinho!</p>
+      <a href="https://wa.me/5583996307400" class="btn-whatsapp" target="_blank">
+        <span>📱</span> Falar no WhatsApp
+      </a>
+    </div>
+    <div class="contato-info">
+      <div class="info-item">
+        <span>📍</span>
+        <strong>João Pessoa, PB</strong>
+        <em>Base da Julia</em>
+      </div>
+      <div class="info-item">
+        <span>💻</span>
+        <strong>Todo Brasil</strong>
+        <em>Online</em>
+      </div>
+      <div class="info-item">
+        <span>🕐</span>
+        <strong>Seg–Sex</strong>
+        <em>8h às 19h</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Julia Costa</strong> · Psicóloga Clínica · CRP 13/13585 · Feito com 💗</p>
+</footer>
+
+<!-- FLOAT WHATSAPP -->
+<a href="https://wa.me/5583996307400" class="float-wa" target="_blank" title="Chamar no WhatsApp">💬</a>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
